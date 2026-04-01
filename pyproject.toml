@@ -7,5 +7,6 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.135.2",
     "gradio>=6.10.0",
+    "openai>=2.30.0",
     "uvicorn>=0.42.0",
 ]
