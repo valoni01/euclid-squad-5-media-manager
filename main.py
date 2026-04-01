@@ -1,6 +1,6 @@
-def main():
-    print("Hello from social-media-manager!")
+from app.ui import build_app
 
+app = build_app()
 
 if __name__ == "__main__":
-    main()
+    app.launch()

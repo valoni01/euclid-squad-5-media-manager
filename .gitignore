@@ -1,11 +1,58 @@
-# Python-generated files
+# Python
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.py[cod]
+*$py.class
 
 # Virtual environments
-.venv
+.venv/
+venv/
+env/
+ENV/
+
+# uv
+.python-version
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment / secrets
 .env
+.env.*
+!.env.example
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Local databases / temp files
+*.db
+*.sqlite3
+tmp/
+temp/
+
+# OS files
+Thumbs.db
+
+# Gradio
+gradio_cached_examples/
