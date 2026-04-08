@@ -171,8 +171,3 @@ async def run_research_pipeline(
             follow_up = last_decision.gaps_and_follow_up.strip() or "Broaden and deepen the prior research; resolve contradictions and add platform-specific detail."
 
     return last_decision, accumulated
-
-
-
-if __name__ == "__main__":
-    asyncio.run(run_research_pipeline("I'm thinking of research for a tech company"))
