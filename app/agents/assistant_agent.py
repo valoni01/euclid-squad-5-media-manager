@@ -9,7 +9,6 @@ from agents import (
 
 from app.agents.guardrails import relevance_checker_agent
 from app.agents.Instructions import assistant_agent_instructions
-from app.agents.models import UserRequest
 
 
 @input_guardrail
@@ -25,27 +24,28 @@ async def relevance_guardrail(ctx, agent, input) -> GuardrailFunctionOutput:
     )
 
 
+_last_research_brief: str | None = None
+
+
+def get_and_clear_research_brief() -> str | None:
+    global _last_research_brief
+    brief = _last_research_brief
+    _last_research_brief = None
+    return brief
+
+
 @function_tool
-def submit_request(
-    content_number: int,
-    content_topics: list[str],
-    content_tone: str,
-    content_audience: str,
-    content_platform: str,
-    content_trends: list[str] | None = None,
-    content_extra_details: str = "",
-) -> str:
-    """Submit the collected content request once all required details have been confirmed by the user."""
-    request = UserRequest(
-        content_number=content_number,
-        content_topics=content_topics,
-        content_tone=content_tone,
-        content_audience=content_audience,
-        content_platform=content_platform,
-        content_trends=content_trends or [],
-        content_extra_details=content_extra_details,
-    )
-    return f"Request submitted successfully: {request.model_dump_json(indent=2)}"
+def submit_request(research_brief: str) -> str:
+    """Submit the collected content request once all required details have been confirmed by the user.
+
+    research_brief: A detailed research brief you compose based on the full conversation.
+    It should capture the brand context, goals, audience insights, platform nuances,
+    trends to explore, and any angles worth investigating — written as a directive for
+    a research agent that will gather information to support content creation.
+    """
+    global _last_research_brief
+    _last_research_brief = research_brief.strip()
+    return "Research brief submitted successfully. The research team will begin investigating."
 
 
 assistant_agent = Agent(
@@ -54,7 +54,7 @@ assistant_agent = Agent(
     model="gpt-4o-mini",
     tools=[submit_request],
     input_guardrails=[relevance_guardrail],
-    model_settings=ModelSettings(temperature=0.0),
+    model_settings=ModelSettings(temperature=0.0, max_tokens=1024),
 )
 
 

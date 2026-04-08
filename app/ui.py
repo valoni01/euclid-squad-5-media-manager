@@ -1,7 +1,8 @@
 import gradio as gr
-from agents import Runner
+from agents import Runner, trace
 from agents.exceptions import InputGuardrailTripwireTriggered
-from app.agents.assistant_agent import assistant_agent
+from app.agents.assistant_agent import assistant_agent, get_and_clear_research_brief
+from app.agents.research_agent import run_research_pipeline
 
 
 def _extract_text(content) -> str:
@@ -29,8 +30,21 @@ async def chat(message, history):
     messages.append({"role": "user", "content": _extract_text(message)})
 
     try:
-        result = await Runner.run(assistant_agent, messages)
-        return str(result.final_output)
+        with trace("Social Media Manager"):
+            result = await Runner.run(assistant_agent, messages)
+            assistant_response = str(result.final_output)
+
+            research_brief = get_and_clear_research_brief()
+            if research_brief:
+                decision, reports = await run_research_pipeline(research_brief)
+                research_output = "\n\n---\n\n".join(reports)
+                return (
+                    f"{assistant_response}\n\n"
+                    f"**Research Results ({decision.decision}):**\n\n"
+                    f"{research_output}"
+                )
+
+            return assistant_response
     except InputGuardrailTripwireTriggered:
         return "Sorry, I can only help with social media content creation and calendar management."
 
