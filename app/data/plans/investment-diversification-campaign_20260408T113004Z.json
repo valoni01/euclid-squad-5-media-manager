@@ -1,0 +1,102 @@
+{
+  "plan_title": "Investment Diversification Campaign",
+  "horizon_label": "14 days starting 2023-10-15",
+  "pillar_summary": "Focus on educational content regarding diversification strategies, app features for facilitating investments, and community engagement by sharing investment experiences.",
+  "cadence_notes": "Post 3 times a week, alternating between Carousel Posts and Reels to maintain audience engagement and provide valuable content.",
+  "posts": [
+    {
+      "day_index": 0,
+      "scheduled_date_hint": "Week 1 Monday",
+      "platform": "Instagram",
+      "format": "text",
+      "hook": "Are you ready to grow your money?",
+      "caption_body": "Diversifying your investments is key to maximizing returns and reducing risk. Start with our Beginner's Guide to Diversification! Swipe to learn the essentials that could change your investment game! 💰📈",
+      "hashtags": [
+        "#InvestmentTips",
+        "#Diversification",
+        "#FinanceForAll"
+      ],
+      "media_brief": "Create a clean carousel post with engaging visuals showing the concept of diversification through relatable examples and stats. Use a soft color palette with clear text overlays to ensure readability.",
+      "time_window": "10:00-12:00"
+    },
+    {
+      "day_index": 2,
+      "scheduled_date_hint": "Week 1 Wednesday",
+      "platform": "Instagram",
+      "format": "text",
+      "hook": "Want to know the best strategies to diversify your portfolio?",
+      "caption_body": "Check out our Top 5 Diversification Strategies for 2026! From stocks to real estate, we’ve got you covered. Swipe to discover actionable tips! 🏠📊",
+      "hashtags": [
+        "#InvestmentStrategy",
+        "#SmartInvesting",
+        "#YoungInvestors"
+      ],
+      "media_brief": "Design infographics that highlight each diversification strategy, paired with brief descriptions of their benefits. Ensure the visual has a modern and trustworthy feel.",
+      "time_window": "10:00-12:00"
+    },
+    {
+      "day_index": 4,
+      "scheduled_date_hint": "Week 1 Friday",
+      "platform": "Instagram",
+      "format": "text",
+      "hook": "Investing made simple!",
+      "caption_body": "Discover how our app makes portfolio diversification effortless! With easy-to-use tools and expert insights, you’ll be on your way to smarter investing in no time! 🚀📱",
+      "hashtags": [
+        "#FinanceForAll",
+        "#InvestmentTips",
+        "#InvestmentApp"
+      ],
+      "media_brief": "Include screenshots of the app interface showing diversification features, and use user testimonials to enhance credibility. Maintain a professional yet approachable tone.",
+      "time_window": "10:00-12:00"
+    },
+    {
+      "day_index": 6,
+      "scheduled_date_hint": "Week 2 Monday",
+      "platform": "Instagram Reels",
+      "format": "text",
+      "hook": "Quick tip: Diversification!",
+      "caption_body": "In just 30 seconds, learn why diversifying your portfolio is crucial for long-term success! Don’t miss it! ⚡️",
+      "hashtags": [
+        "#InvestmentTips",
+        "#FinanceForAll"
+      ],
+      "media_brief": "Create a dynamic short video that quickly conveys the importance of diversification, incorporating trending audio to capture attention.",
+      "time_window": "09:00-11:00"
+    },
+    {
+      "day_index": 8,
+      "scheduled_date_hint": "Week 2 Wednesday",
+      "platform": "Instagram Reels",
+      "format": "text",
+      "hook": "Busting investment myths!",
+      "caption_body": "Think diversification is just for the pros? Think again! Watch to see how you can easily diversify your portfolio with our app! 💡",
+      "hashtags": [
+        "#SmartInvesting",
+        "#InvestmentMyths"
+      ],
+      "media_brief": "Produce a lively reel that debunks common myths about diversification while showcasing user-friendly app features. Utilize engaging visuals and trendy audio.",
+      "time_window": "09:00-11:00"
+    },
+    {
+      "day_index": 10,
+      "scheduled_date_hint": "Week 2 Friday",
+      "platform": "Instagram Reels",
+      "format": "text",
+      "hook": "Your path to financial freedom starts now!",
+      "caption_body": "Wrapping up our series on diversification! Join the conversation and share your investment journey with us! 📈💬",
+      "hashtags": [
+        "#YoungInvestors",
+        "#InvestmentJourney"
+      ],
+      "media_brief": "Encourage user interaction by prompting viewers to share their own investment experiences. Use engaging visuals and a friendly tone to make it relatable.",
+      "time_window": "09:00-11:00"
+    }
+  ],
+  "compliance_and_risk_notes": "Ensure all content adheres to financial advertising regulations, provide appropriate disclaimers about investment risks, and avoid oversimplifying complex investment concepts.",
+  "metrics_to_watch": [
+    "Engagement rates (likes/comments/shares)",
+    "Follower growth over the campaign period",
+    "User inquiries about the app and investment strategies"
+  ],
+  "handoff_notes_for_social_manager": "Schedule content according to the posting cadence. Prepare to monitor engagement and feedback after each post to adjust the strategy as needed."
+}

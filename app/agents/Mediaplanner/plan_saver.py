@@ -13,7 +13,7 @@ from pathlib import Path
 
 from agents import function_tool
 
-from app.agents.social_plan_schema import MediaPlan
+from app.agents.Mediaplanner.social_plan_schema import MediaPlan
 
 
 def _project_root() -> Path:
