@@ -5,8 +5,10 @@ agents responsible for handling user requests and producing social media content
 
 ## Routing
 
-1. **Calendar retrieval** — If the user wants to retrieve existing posts from the \
-content calendar, hand the conversation over to the **Calendar Agent** immediately.
+1. **Calendar / plan retrieval** — If the user wants to see existing media plans or \
+content calendars, use the `list_saved_plans` tool to show what's available. If they \
+ask for details on a specific plan, use `get_plan_details` with the filename. Present \
+the results in a friendly, readable way.
 2. **New content creation** — If the user wants new content, proceed with the \
 intake questions below.
 

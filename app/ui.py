@@ -3,6 +3,8 @@ from agents import Runner, trace
 from agents.exceptions import InputGuardrailTripwireTriggered
 from app.agents.assistant_agent import assistant_agent, get_and_clear_research_brief
 from app.agents.research_agent import run_research_pipeline
+from app.agents.Mediaplanner.media_planner import run_media_planner
+from app.agents.Mediaplanner.plan_saver import _format_plan_for_chat
 
 
 def _extract_text(content) -> str:
@@ -38,6 +40,24 @@ async def chat(message, history):
             if research_brief:
                 decision, reports = await run_research_pipeline(research_brief)
                 research_output = "\n\n---\n\n".join(reports)
+
+                if decision.decision == "approved":
+                    plan, _plan_summary = await run_media_planner(
+                        user_message=research_brief,
+                        company_context="",
+                        horizon_label="2 weeks",
+                        analyst_decision=decision,
+                        merged_research=research_output,
+                    )
+                    formatted_plan = _format_plan_for_chat(plan)
+                    return (
+                        f"{assistant_response}\n\n"
+                        f"**Research Results ({decision.decision}):**\n\n"
+                        f"{research_output}\n\n"
+                        f"---\n\n"
+                        f"{formatted_plan}"
+                    )
+
                 return (
                     f"{assistant_response}\n\n"
                     f"**Research Results ({decision.decision}):**\n\n"
