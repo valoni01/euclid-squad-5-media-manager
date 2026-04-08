@@ -9,6 +9,7 @@ from agents import (
 
 from app.agents.guardrails import relevance_checker_agent
 from app.agents.Instructions import assistant_agent_instructions
+from app.agents.Mediaplanner.plan_saver import list_saved_plans, get_plan_details
 
 
 @input_guardrail
@@ -52,7 +53,7 @@ assistant_agent = Agent(
     name="assistant-agent",
     instructions=assistant_agent_instructions,
     model="gpt-4o-mini",
-    tools=[submit_request],
+    tools=[submit_request, list_saved_plans, get_plan_details],
     input_guardrails=[relevance_guardrail],
     model_settings=ModelSettings(temperature=0.0, max_tokens=1024),
 )

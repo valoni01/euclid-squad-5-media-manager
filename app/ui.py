@@ -4,45 +4,7 @@ from agents.exceptions import InputGuardrailTripwireTriggered
 from app.agents.assistant_agent import assistant_agent, get_and_clear_research_brief
 from app.agents.research_agent import run_research_pipeline
 from app.agents.Mediaplanner.media_planner import run_media_planner
-from app.agents.Mediaplanner.social_plan_schema import MediaPlan
-
-
-def _format_media_plan(plan: MediaPlan) -> str:
-    """Render a MediaPlan as readable markdown for the chat UI."""
-    lines = [
-        f"### {plan.plan_title}",
-        f"**Horizon:** {plan.horizon_label}",
-        "",
-        f"**Content pillars:** {plan.pillar_summary}",
-    ]
-    if plan.cadence_notes:
-        lines.append(f"\n**Cadence:** {plan.cadence_notes}")
-
-    lines.append("\n---\n#### Content Calendar\n")
-    for i, post in enumerate(plan.posts, 1):
-        tags = " ".join(post.hashtags) if post.hashtags else ""
-        lines.append(f"**{i}. {post.scheduled_date_hint or f'Day {post.day_index}'} — {post.platform} ({post.format})**")
-        if post.time_window:
-            lines.append(f"  *Post window:* {post.time_window}")
-        lines.append(f"  **Hook:** {post.hook}")
-        lines.append(f"  {post.caption_body}")
-        if tags:
-            lines.append(f"  {tags}")
-        if post.media_brief:
-            lines.append(f"  *Media brief:* {post.media_brief}")
-        lines.append("")
-
-    if plan.compliance_and_risk_notes:
-        lines.append(f"---\n**Compliance & Risk Notes:** {plan.compliance_and_risk_notes}\n")
-    if plan.metrics_to_watch:
-        lines.append("**Metrics to Watch:**")
-        for m in plan.metrics_to_watch:
-            lines.append(f"- {m}")
-        lines.append("")
-    if plan.handoff_notes_for_social_manager:
-        lines.append(f"**Handoff Notes:** {plan.handoff_notes_for_social_manager}\n")
-
-    return "\n".join(lines)
+from app.agents.Mediaplanner.plan_saver import _format_plan_for_chat
 
 
 def _extract_text(content) -> str:
@@ -87,7 +49,7 @@ async def chat(message, history):
                         analyst_decision=decision,
                         merged_research=research_output,
                     )
-                    formatted_plan = _format_media_plan(plan)
+                    formatted_plan = _format_plan_for_chat(plan)
                     return (
                         f"{assistant_response}\n\n"
                         f"**Research Results ({decision.decision}):**\n\n"

@@ -58,3 +58,76 @@ def load_media_plan(path: str | Path) -> MediaPlan:
     """Load a plan written by :func:`persist_media_plan` (for Social Media Manager / Flow 2)."""
     p = Path(path)
     return MediaPlan.model_validate_json(p.read_text(encoding="utf-8"))
+
+
+def _format_plan_for_chat(plan: MediaPlan) -> str:
+    """Render a MediaPlan as readable markdown."""
+    lines = [
+        f"### {plan.plan_title}",
+        f"**Horizon:** {plan.horizon_label}",
+        "",
+        f"**Content pillars:** {plan.pillar_summary}",
+    ]
+    if plan.cadence_notes:
+        lines.append(f"\n**Cadence:** {plan.cadence_notes}")
+
+    lines.append("\n---\n#### Content Calendar\n")
+    for i, post in enumerate(plan.posts, 1):
+        tags = " ".join(post.hashtags) if post.hashtags else ""
+        lines.append(f"**{i}. {post.scheduled_date_hint or f'Day {post.day_index}'} — {post.platform} ({post.format})**")
+        if post.time_window:
+            lines.append(f"  *Post window:* {post.time_window}")
+        lines.append(f"  **Hook:** {post.hook}")
+        lines.append(f"  {post.caption_body}")
+        if tags:
+            lines.append(f"  {tags}")
+        if post.media_brief:
+            lines.append(f"  *Media brief:* {post.media_brief}")
+        lines.append("")
+
+    if plan.compliance_and_risk_notes:
+        lines.append(f"---\n**Compliance & Risk Notes:** {plan.compliance_and_risk_notes}\n")
+    if plan.metrics_to_watch:
+        lines.append("**Metrics to Watch:**")
+        for m in plan.metrics_to_watch:
+            lines.append(f"- {m}")
+        lines.append("")
+    if plan.handoff_notes_for_social_manager:
+        lines.append(f"**Handoff Notes:** {plan.handoff_notes_for_social_manager}\n")
+
+    return "\n".join(lines)
+
+
+@function_tool
+def list_saved_plans() -> str:
+    """List all saved media plans. Returns plan titles, filenames, and creation dates."""
+    plan_dir = plans_directory()
+    files = sorted(plan_dir.glob("*.json"), reverse=True)
+    if not files:
+        return "No saved media plans found."
+
+    entries = []
+    for f in files:
+        try:
+            plan = MediaPlan.model_validate_json(f.read_text(encoding="utf-8"))
+            entries.append(f"- **{plan.plan_title}** ({plan.horizon_label}) — file: `{f.name}`")
+        except Exception:
+            entries.append(f"- *(unreadable)* — file: `{f.name}`")
+
+    return f"Found {len(entries)} saved plan(s):\n\n" + "\n".join(entries)
+
+
+@function_tool
+def get_plan_details(filename: str) -> str:
+    """Retrieve and display a specific saved media plan by its filename.
+
+    filename: The JSON filename of the plan (e.g. 'investment-diversification-campaign_20260408T113004Z.json').
+    """
+    plan_dir = plans_directory()
+    path = plan_dir / filename
+    if not path.exists():
+        available = [f.name for f in sorted(plan_dir.glob("*.json"), reverse=True)]
+        return f"Plan '{filename}' not found. Available plans: {available}"
+
+    plan = MediaPlan.model_validate_json(path.read_text(encoding="utf-8"))
+    return _format_plan_for_chat(plan)
